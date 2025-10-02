@@ -25,6 +25,11 @@ frm.inDetalhes.addEventListener("focus", () => {
         const num = (pizza == "media") ? 2 : (pizza == "grande") ? 3:4
         // atribur placeholder e exebir uma dica do preenchimento
         frm.inDetalhes.placeholder = `Até ${num} sabores`
+    }else {
+        const bebida = frm.inBebida.value
+        const sugestao = (bebida == "refri") ? "Coca-cola, Guaraná" : 
+        (bebida == "suco") ? "Limão, Maracujá, Laranja" : "Copo, Jarra"
+        frm.inDetalhes.placeholder = sugestao
     }
 })
 
