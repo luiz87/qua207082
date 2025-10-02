@@ -24,3 +24,10 @@ function calcular() {
        visor.value = "Erro" 
     }
 }
+
+function porcentagem() {
+    calcular()
+    const visor = document.querySelector("#visor")
+    visor.value = Number(visor.value)/100
+}
+
