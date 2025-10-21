@@ -2,9 +2,9 @@ const tbody = document.querySelector("tbody")
 let lsItem = []
 
 const cores = {
-    "Em Fila": "bg-secondary-subtle",
-    "Iniciado": "bg-primary-subtle",
-    "Concluído": "bg-danger-subtle"
+    "Pré - Operatório":"bg-warning-subtle",
+    "Transferído":"bg-primary-subtle",
+    "Em Recuperação":"bg-success-subtle"
 }
 
 function atualizarTabela() {
@@ -13,7 +13,7 @@ function atualizarTabela() {
     for (i of lsItem) {
         tbody.innerHTML +=
             `<tr>
-                <td>${i.item}</td>
+                <td>${i.nome}</td>
                 <td class="${cores[i.status]}">${i.status}</td>
             </tr>`
         cont++

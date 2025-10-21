@@ -5,16 +5,16 @@ let filtro = localStorage.getItem("filtro")
 filtro = filtro == null ? "" : filtro
 frm.addEventListener("submit", (e) => {
     e.preventDefault()
-    const item = frm.inItem.value
+    const nome = frm.inNome.value
     const status = frm.inStatus.value
     const index = frm.inIndex.value
     // incluir ou atualizar
-    index == "" ? lsItem.push({item,status}) : lsItem[index] = {item,status}
+    index == "" ? lsItem.push({nome,status}) : lsItem[index] = {nome,status}
     atualizarTabela()
 })
 
 function prepararEdicao(index){
-    frm.inItem.value = lsItem[index].item
+    frm.inNome.value = lsItem[index].nome
     frm.inStatus.value = lsItem[index].status
     frm.inIndex.value = index
     frm.btApagar.disabled = false
@@ -23,10 +23,10 @@ function prepararEdicao(index){
 frm.btApagar.addEventListener("click", () => {
     const index = frm.inIndex.value
     if(index == ""){
-        alert("Necessário selecionar 1 item.")
+        alert("Necessário selecionar 1 pacinte.")
         return
     }
-    if(confirm("Deseja realmente apagar esse item?") == false){
+    if(confirm("Deseja realmente apagar esse pacinte?") == false){
         return
     }
     lsItem.splice(index,1)
@@ -35,9 +35,9 @@ frm.btApagar.addEventListener("click", () => {
 })
 
 const cores = {
-    "Em Fila":"bg-secondary-subtle",
-    "Iniciado":"bg-primary-subtle",
-    "Concluído":"bg-danger-subtle"
+    "Pré - Operatório":"bg-warning-subtle",
+    "Transferído":"bg-primary-subtle",
+    "Em Recuperação":"bg-success-subtle"
 }
 
 function atualizarTabela() {    
@@ -49,7 +49,7 @@ function atualizarTabela() {
         if(filtro == "" || filtro.includes(i.status)){
             tbody.innerHTML += 
             `<tr onclick="prepararEdicao(${cont})" >
-                <td>${i.item}</td>
+                <td>${i.nome}</td>
                 <td class="${cores[i.status]}">${i.status}</td>
             </tr>`
         }
@@ -58,7 +58,7 @@ function atualizarTabela() {
 }
 
 function limpar(){
-    frm.inItem.value = ""
+    frm.inNome.value = ""
     frm.inStatus.value = ""
     frm.inIndex.value = ""
     frm.btApagar.disabled = true
