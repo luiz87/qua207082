@@ -1,21 +1,25 @@
 const frm = document.querySelector("form")
 const tbody = document.querySelector("tbody")
-let lsItem = []
+let lsPaciente = []
 let filtro = localStorage.getItem("filtro") 
 filtro = filtro == null ? "" : filtro
 frm.addEventListener("submit", (e) => {
     e.preventDefault()
     const nome = frm.inNome.value
     const status = frm.inStatus.value
+    const local = frm.inLocal.value
+    const inicioPrevisto = frm.inInicioPrevisto.value
     const index = frm.inIndex.value
     // incluir ou atualizar
-    index == "" ? lsItem.push({nome,status}) : lsItem[index] = {nome,status}
+    index == "" ? lsPaciente.push({nome,status,local,inicioPrevisto}) : lsPaciente[index] = {nome,status,local,inicioPrevisto}
     atualizarTabela()
 })
 
 function prepararEdicao(index){
-    frm.inNome.value = lsItem[index].nome
-    frm.inStatus.value = lsItem[index].status
+    frm.inNome.value = lsPaciente[index].nome
+    frm.inStatus.value = lsPaciente[index].status
+    frm.inLocal.value = lsPaciente[index].local
+    frm.inInicioPrevisto.value = lsPaciente[index].inicioPrevisto
     frm.inIndex.value = index
     frm.btApagar.disabled = false
 }
@@ -29,7 +33,7 @@ frm.btApagar.addEventListener("click", () => {
     if(confirm("Deseja realmente apagar esse pacinte?") == false){
         return
     }
-    lsItem.splice(index,1)
+    lsPaciente.splice(index,1)
     atualizarTabela() 
     
 })
@@ -42,15 +46,16 @@ const cores = {
 
 function atualizarTabela() {    
     limpar()
-    localStorage.setItem("lsItem",JSON.stringify(lsItem))
+    localStorage.setItem("lsPaciente",JSON.stringify(lsPaciente))
     tbody.innerHTML = ""
     let cont = 0
-    for(i of lsItem){
+    for(i of lsPaciente){
         if(filtro == "" || filtro.includes(i.status)){
             tbody.innerHTML += 
             `<tr onclick="prepararEdicao(${cont})" >
                 <td>${i.nome}</td>
-                <td class="${cores[i.status]}">${i.status}</td>
+                <td class="${cores[i.status]}">${i.status} (${i.local}) </td>
+                <td>${i.inicioPrevisto}</td>
             </tr>`
         }
         cont++
@@ -61,27 +66,12 @@ function limpar(){
     frm.inNome.value = ""
     frm.inStatus.value = ""
     frm.inIndex.value = ""
+    frm.inLocal.value = ""
+    frm.inInicioPrevisto.value = ""
     frm.btApagar.disabled = true
 }
 
-if(localStorage.getItem("lsItem") != null){
-    lsItem = JSON.parse(localStorage.getItem("lsItem"))
+if(localStorage.getItem("lsPaciente") != null){
+    lsPaciente = JSON.parse(localStorage.getItem("lsPaciente"))
     atualizarTabela()
-}
-
-const lsFiltro = frm.querySelectorAll('input[type="checkbox"]')
-for(const bt of lsFiltro){
-    bt.addEventListener("click", filtrar)
-    if(filtro.includes(bt.value)){
-        bt.checked = true
-    }
-}
-
-function filtrar(){  
-    filtro = ""  
-    for(const bt of lsFiltro){
-        filtro += bt.checked ? bt.value+"," : ""
-    }
-    atualizarTabela()
-    localStorage.setItem("filtro",filtro)
 }

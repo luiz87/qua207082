@@ -14,11 +14,11 @@
         <h1>Gerenciar Painel Centro Cirúrgico</h1>
         <form>
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-6">
                     <label for="inNome" class="form-label">Nome do Paciente:</label>
                     <input type="text" id="inNome" class="form-control" required>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <label for="inStatus" class="form-label">Status:</label>
                     <select name="status" id="inStatus" class="form-select" required>
                         <option value="">Selecione</option>
@@ -26,6 +26,14 @@
                         <option>Transferído</option>
                         <option>Em Recuperação</option>
                     </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="inLocal" class="form-label">Local:</label>
+                    <input type="text" id="inLocal" class="form-control" placeholder="Sala/Quarto" >
+                </div>
+                <div class="col-md-3">
+                    <label for="inInicioPrevisto" class="form-label">Início Prevísto:</label>
+                    <input type="time" id="inInicioPrevisto" class="form-control">
                 </div>
             </div>
             <div class="float-end">
@@ -38,8 +46,9 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th>Nome do Paciente</th>
-                    <th>Status</th>
+                    <th width="40%">Nome do Paciente</th>
+                    <th width="20%">Status</th>
+                    <th>Início Prevísto</th>
                 </tr>
             </thead>
             <tbody>
